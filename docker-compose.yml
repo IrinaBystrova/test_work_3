@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python rest_api/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+
+  db:
+    image: postgres:11.1
+    volumes:
+      - postgres_data:/usr/local/bvin/postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=notes
+
+volumes:
+  postgres_data:
